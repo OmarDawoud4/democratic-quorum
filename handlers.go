@@ -43,7 +43,6 @@ func (n *Node) handleVictory(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.NewDecoder(r.Body).Decode(&msg)
-
 	n.mu.Lock()
 	n.leaderID = msg.LeaderID
 	n.isLeader = false

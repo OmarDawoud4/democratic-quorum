@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"sync"
+	"time"
 )
 
 type Peer struct {
@@ -43,7 +44,12 @@ func (n *Node) triggerServer() {
 
 	addr := fmt.Sprintf(":%d", n.port)
 
-	if err := http.ListenAndServe(addr, mux); err != nil {
-		fmt.Printf("Node %d failed to start: %v\n", n.id, err)
-	}
+	go func() {
+		if err := http.ListenAndServe(addr, mux); err != nil {
+			fmt.Printf("Node %d failed to start: %v\n", n.id, err)
+		}
+	}()
+
+	time.Sleep(100 * time.Millisecond)
+	n.startElection()
 }
