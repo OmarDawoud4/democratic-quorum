@@ -13,13 +13,14 @@ type Peer struct {
 }
 
 type Node struct {
-	id       int
-	port     int
-	peers    []Peer // updated for election comparison
-	state    int
-	isLeader bool
-	leaderID int
-	mu       sync.Mutex
+	id           int
+	port         int
+	peers        []Peer // updated for election comparison
+	state        int
+	isLeader     bool
+	leaderID     int
+	mu           sync.Mutex
+	lastElection time.Time // fix the spam
 }
 
 func newNode(id int, port int, peers []Peer) *Node {
@@ -30,6 +31,7 @@ func newNode(id int, port int, peers []Peer) *Node {
 		state:    0,
 		isLeader: false,
 		leaderID: -1,
+		lastElection: time.Time{},
 	}
 }
 

@@ -5,9 +5,18 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 )
 
 func (n *Node) startElection() {
+	n.mu.Lock()
+	// Cooldown: Don't start election if one happened in last 2 seconds
+	if time.Since(n.lastElection) < 2*time.Second {
+		n.mu.Unlock()
+		return
+	}
+	n.lastElection = time.Now()
+	n.mu.Unlock()
 
 	fmt.Printf("Node %d: Election triggered \n", n.id)
 
