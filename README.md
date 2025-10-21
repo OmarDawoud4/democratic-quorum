@@ -20,3 +20,14 @@ A distributed system demonstrating leader election using the Bully Algorithm.
 - `GET /status` - Node status (ID, leader, state)
 - `POST /election` - Trigger election
 - `POST /victory` - Announce new leader
+## Run with Docker
+Pull the image
+```bash
+docker pull omardawoud/democratic-quorum:latest
+```
+Run the container
+```bash
+docker run -p 8001:8001 omardawoud/democratic-quorum
+```
+### Docker Hub Link
+[https://hub.docker.com/r/omardawoud/democratic-quorum](https://hub.docker.com/r/omardawoud/democratic-quorum)
